@@ -6,6 +6,8 @@ class Employee < ApplicationRecord
   validate :valid_brazilian_cpf
   validate :valid_brazilian_phone_number
 
+  before_save :format_phone_number
+
   private
 
   def valid_brazilian_cpf
@@ -38,14 +40,21 @@ class Employee < ApplicationRecord
     sanitized_phone_number = phone_number.gsub(/\D/, '')
     return unless sanitized_phone_number.length.in?(10, 11)
 
-    if sanitized_phone_number[0] == '1' && sanitized_phone_number[1] == '9'
-      unless sanitized_phone_number[2..-1].match?(/\A\d{4})[-.]?\d{4}\z/)
-        errors.add(:phone_number), "Valid number on Brasil."
+    if sanitized_phone_number.start_with?('11') && sanitized_phone_number.length == 11
+      unless sanitized_phone_number.match?(/\A11[2-9]\d{8}\z/)
+        errors.add(:phone_number, "unvalid number on Brasil. Must start with '11' and have 11 digits.")
       end
     else
-      unless sanitized_phone_number.match?( /\A(?:9\d{4}|\d{4})[-.]?\d{4}\z/)
+      unless sanitized_phone_number.match?(/\A(?:[1-9]{2})?[2-9]\d{3}\d{4}\z/)
         errors.add(:phone_number, "Invalid number on Brazil, try again.")
       end
+    end
+  end
+
+  def format_phone_number
+    if phone_number.present? && phone_number.match?(/\A\d{11}\z/)
+      # The number will format in the summary: "+ddd 9xxxx-xxxx"
+      self.phone_number = "+#{phone_number[0..1]} 9#{phone_number[2..5]}-#{phone_number[6..9]}"
     end
   end
 end
