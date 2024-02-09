@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get 'log/index'
   get 'employee/index'
   get 'employee/new'
   get 'employee/edit'
