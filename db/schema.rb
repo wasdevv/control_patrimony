@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_02_09_002553) do
+ActiveRecord::Schema[7.1].define(version: 2024_02_09_054229) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -21,6 +21,18 @@ ActiveRecord::Schema[7.1].define(version: 2024_02_09_002553) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_employees_on_user_id"
+  end
+
+  create_table "logs", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.string "trackable_type", null: false
+    t.bigint "trackable_id", null: false
+    t.integer "action"
+    t.text "details"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["trackable_type", "trackable_id"], name: "index_logs_on_trackable"
+    t.index ["user_id"], name: "index_logs_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -39,4 +51,5 @@ ActiveRecord::Schema[7.1].define(version: 2024_02_09_002553) do
   end
 
   add_foreign_key "employees", "users"
+  add_foreign_key "logs", "users"
 end

@@ -1,6 +1,10 @@
-<% if user_signed_in? %>
-  Welcome, <%= current_user.email %>
-  <%= link_to "Sign Out", destroy_user_session_path, method: :delete, data: { turbo_method: :delete} %>
-<% else %>
-  <%= link_to "Sign In", new_user_session_path%>
-<% end %>
+<header>
+  <a href="#" class="logo">Ruby Patrimony</a>
+
+  <nav class="navbar">
+    <a href="#">Home</a>
+    <a href="#">Admin Log</a>
+    <a href="#">New Employee</a>
+    <a href="#">Contact</a>
+  </nav>
+</header>

@@ -7,6 +7,13 @@
     <%= csp_meta_tag %>
 
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    
+    <%# navbar css %>
+    <%= stylesheet_link_tag "navbar", "data-turbo-track": "reload" %>
+    
+    <%# employee section css %>
+    <%= stylesheet_link_tag "employee", "data-turbo-track": "reload" %>
+    
     <%= javascript_importmap_tags %>
 
     <%# Bootstrap %>
@@ -16,6 +23,7 @@
   </head>
 
   <body>
+    <%# navbar in shared/navbar %>
     <%= render 'shared/navbar' %>
     
     <%= yield %>
