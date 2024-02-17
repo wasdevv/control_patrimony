@@ -1,4 +1,9 @@
 class Employee < ApplicationRecord
+  validates :employee_id, presence: true, uniqueness: true # Employee ID only used 1 time and unique
+  validates :used, inclusion: { in: [true, false] }
+
+  before_validation :generate_employee_id, on: :create
+
   belongs_to :user
   validates :cpf, presence: true, length: { is: 11}, numericality: { only_integer: true}
   validates :phone_number, presence: true
@@ -10,6 +15,14 @@ class Employee < ApplicationRecord
 
   private
 
+  # ONLY Admin user can create the Employee ID
+  # AND used 1 time before login on site and
+  # received the ID code, put on the employee new.
+  def generate_employee_id
+    self.employee_id = SecureRandom.hex(5)
+    self.used = false
+  end
+  
   def valid_brazilian_cpf
     return if cpf.blank? || cpf.length != 11 || !cpf.match?(/\A\d{11}\z/)
   
