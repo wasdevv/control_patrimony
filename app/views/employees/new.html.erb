@@ -1,15 +1,22 @@
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
 <div class="text-center">
   <h1>New <strong>Employee</strong></h1>
   
-  <%= form_for @employee, url: new_employee_path do |f| %>
+  <%= form_for @employee, url: employees_path do |f| %>
     <%= f.label :cpf %>
     <%= f.text_field :cpf, placeholder: "Type your CPF" %>
     <br />
     <%= f.label :Number %>
-    <%= f.number_field :phone_number, placeholder: "Type your Phone Number" %>
+    <%= f.text_field :phone_number, placeholder: "Type your Phone Number" %>
     <br />
     <%= f.label :employee_id, "Employee ID" %>
-    <%= f.number_field :employee_id, placeholder: "Type your Employee ID" %>
+    <%= f.number_field :employee_id, placeholder: "Type your Employee ID", inputmode: "numeric" %>
     <br>
     <%= f.submit 'New Employee' %>
   <% end %>

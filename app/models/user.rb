@@ -15,13 +15,18 @@ class User < ApplicationRecord
           role == 'admin'
          end
 
-         def associate_employee_id(employee_id)
-          employee = Employee.find_by(employee_id: employee_id, used: false )
-          if employee.present? && self.employee.blank?
-            employee.update(used: true) # if 
-            self.update(employee: employee)
-            return true
-          else
+         def assign_employee(employee_id)
+          begin
+            employee = Employee.find_by(employee_id: employee_id, used: false )
+            if employee.present?
+              employee.update!(used: true )
+              self.update!(employee: employee)
+              return true
+            else
+              return false
+            end
+          rescue => e
+            Rails.logger.error("Error employee: #{e.message}" )
             return false
           end
         end
