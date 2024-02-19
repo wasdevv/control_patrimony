@@ -1,0 +1,15 @@
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<div class="text-center">
+  <% if user_signed_in? %>
+    <%= current_user.first_name %> <%= current_user.last_name %> <%= current_user.email %> Role: <%= current_user.role %> 
+    <br>
+    <%= link_to "You Are a Employee?", root_path %>
+    <%= link_to "Sign Out", destroy_user_session_path, method: :delete, data: { turbo_method: :delete } %>
+  <% else %>
+    <%= link_to "Sign In", new_user_session_path %>
+  <% end %>

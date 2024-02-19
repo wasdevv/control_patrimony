@@ -7,8 +7,9 @@
 <br>
 <div class="text-center">
   <h1>New <strong>Employee</strong></h1>
-  
-  <%= form_for @employee, url: employees_path do |f| %>
+  <br>
+  <br>
+  <%= form_with(model: @employee) do |f| %>
     <%= f.label :cpf %>
     <%= f.text_field :cpf, placeholder: "Type your CPF" %>
     <br />

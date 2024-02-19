@@ -3,8 +3,14 @@
 
   <nav class="navbar">
     <a href="<%= root_path %>">Home</a>
-    <a href="#">Admin Log</a>
-    <a href="#">New Employee</a>
-    <a href="#">Contact</a>
+    <% if user_signed_in? && current_user.employee? %>
+      <a href="#">Admin Log</a>
+    <% end %>
+    <a href="<%= new_employee_path %>">New Employee</a>
+    <% if current_user %>
+      <a href="<%= contact_path %>">Contact</a>
+    <% else %>
+      <a href="<%= new_user_session_path %>">Sign In</a>
+    <% end %>
   </nav>
 </header>

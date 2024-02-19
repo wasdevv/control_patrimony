@@ -6,11 +6,15 @@ class User < ApplicationRecord
 
          belongs_to :employee, optional: true # Optimal because necessary IF are Employee.
 
-         enum role: { user: 0, admin: 1}
+         enum role: { user: 0, admin: 1, employee: 2}
 
          has_many :logs, as: :trackable, class_name: 'Log'
          has_one :employee
-         
+
+         def employee?
+          role == 'employee'
+         end
+
          def admin?
           role == 'admin'
          end

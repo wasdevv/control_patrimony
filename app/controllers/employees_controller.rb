@@ -1,6 +1,5 @@
 class EmployeesController < ApplicationController
     before_action :authenticate_user!
-    before_action :authorize_admin, only: [:create_employee_id]
 
     # for create employee_id ( NEED ADMIN ROLE ) 
     # employee_id = SecureRandom.random_number(10_000..99_999)
@@ -11,14 +10,16 @@ class EmployeesController < ApplicationController
     end
 
     def create
-        @employee = current_user.employees.build(employees_params)
-        
+        @employee = Employee.new(employee_params)
+        @employee.used = false
+
         if @employee.save
-            create_log(:employee_created, @product, details: { message: 'New employee on system!' })
+            flash[:notice] = 'Employee created success'
+            redirect_to root_path
         else
+            flash.now[:error] = 'Error with create'
             render :new
         end
-
     end
 
     def show
@@ -56,6 +57,6 @@ class EmployeesController < ApplicationController
     end
 
     def employee_params
-        params.require(:employee).permit(:employee_id, :user_id, :cpf, :phone_number)
+        params.require(:employee).permit(:employee_id, :cpf, :phone_number, :user_id)
     end
 end
