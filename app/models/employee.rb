@@ -19,6 +19,7 @@ class Employee < ApplicationRecord
   def used=(value)
     self[:used] = value
   end
+
   
   private
 
